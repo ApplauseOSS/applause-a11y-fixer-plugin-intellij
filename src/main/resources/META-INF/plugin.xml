@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>com.applause.a11y.fixer.plugin.applause-a11y-fixer-plugin</id>
+    <name>Applause A11y Fixer</name>
+    <vendor email="support@applause.com.disabled" url="http://www.applause.com">Applause</vendor>
+
+    <description>Fix all the a11y things that are discovered by axe.</description>
+
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.xml</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <group id="A11y.Fix" class="a11y.actions.FixActionGroup">
+            <add-to-group group-id="EditorPopupMenu"/>
+            <add-to-group group-id="ProjectViewPopupMenu"/>
+            <add-to-group group-id="EditorTabPopupMenu"/>
+            <add-to-group group-id="ConsoleEditorPopupMenu"/>
+        </group>
+    </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <editorNotificationProvider
+                implementation="a11y.notification.FixHtmlDocumentProvider"/>
+    </extensions>
+
+</idea-plugin>

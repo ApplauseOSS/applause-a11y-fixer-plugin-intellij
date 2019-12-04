@@ -1,0 +1,12 @@
+{
+  "name": "applause-a11y-fixer-plugin-intellij",
+  "version": "0.0.1",
+  "scripts": {
+    "cli": "cd applause-a11y-fixer && npm run start",
+    "cli-install": "cd applause-a11y-fixer && npm install"
+  },
+  "engines": {
+    "node": "12.13.0",
+    "npm": "6.7.0"
+  }
+}

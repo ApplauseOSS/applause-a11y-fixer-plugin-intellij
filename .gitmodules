@@ -1,0 +1,3 @@
+[submodule "applause-a11y-fixer"]
+	path = applause-a11y-fixer
+	url = git@github.com:ApplauseAQI/applause-a11y-fixer.git
