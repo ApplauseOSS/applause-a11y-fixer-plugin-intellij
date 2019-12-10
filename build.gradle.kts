@@ -15,6 +15,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     testCompile("junit", "junit", "4.12")
+    implementation(files("${buildDir}/external"))
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
@@ -30,8 +31,6 @@ node {
     version = "12.13.0"
     npmVersion = "6.7.0"
     download = true
-    npmInstallCommand = "run cli-install"
-//    nodeModulesDir = file("${project.projectDir}/applause-a11y-fixer/node_modules")
 }
 
 tasks {
@@ -49,7 +48,21 @@ tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml
     )
 }
 
-task<com.moowork.gradle.node.npm.NpmTask>("runCli") {
-//    dependsOn("npmInstall")
-    setArgs(listOf("run", "cli"))
+task<com.moowork.gradle.node.npm.NpmTask>("a11yFixerInstall") {
+    dependsOn("npmSetup")
+    setArgs(listOf("run", "install-a11y-fixer"))
 }
+
+task<com.moowork.gradle.node.npm.NpmTask>("a11yFixerPackage") {
+    dependsOn("a11yFixerInstall")
+    setArgs(listOf("run", "pkg"))
+    finalizedBy("a11yFixerCopyPackage")
+}
+
+task<Copy>("a11yFixerCopyPackage") {
+    from("${projectDir}/applause-a11y-fixer/pkg")
+    into("${projectDir}/src/main/resources/bin")
+}
+
+tasks.getByName("buildPlugin").dependsOn("a11yFixerCopyPackage")
+tasks.getByName("buildPlugin").mustRunAfter("a11yFixerCopyPackage")

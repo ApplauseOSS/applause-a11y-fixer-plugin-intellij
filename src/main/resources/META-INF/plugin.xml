@@ -8,22 +8,26 @@
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.xml</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
-    </extensions>
+    <extensions defaultExtensionNs="com.intellij"/>
 
     <actions>
-        <group id="A11y.Fix" class="a11y.actions.FixActionGroup">
+        <group id="com.applause.a11y.A11yActionGroup"
+               class="a11y.actions.A11yActionGroup">
             <add-to-group group-id="EditorPopupMenu"/>
             <add-to-group group-id="ProjectViewPopupMenu"/>
             <add-to-group group-id="EditorTabPopupMenu"/>
             <add-to-group group-id="ConsoleEditorPopupMenu"/>
+            <action id="com.applause.a11y.FixAction" class="a11y.actions.A11yFixAction"/>
+            <action id="com.applause.a11y.ReportAction" class="a11y.actions.A11yReportAction"/>
         </group>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="a11y.service.A11yService"/>
         <editorNotificationProvider
-                implementation="a11y.notification.FixHtmlDocumentProvider"/>
+                implementation="a11y.notification.A11yNotificationProvider"/>
+        <preloadingActivity
+                implementation="a11y.init.PreloadA11yExecutable"/>
     </extensions>
 
 </idea-plugin>
