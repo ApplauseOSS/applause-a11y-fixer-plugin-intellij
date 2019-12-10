@@ -109,6 +109,7 @@ class A11yService {
                 fileDocumentManager.reloadFromDisk(document)
                 psiDocumentManager.reparseFiles(listOf(psiFile.virtualFile), true)
                 psiDocumentManager.commitDocument(document)
+                psiFile.virtualFile.refresh(false, false)
 
                 return@Computable true
 
