@@ -9,8 +9,6 @@ import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.ServiceManager
-import com.intellij.openapi.fileEditor.FileDocumentManager
-import com.intellij.psi.PsiDocumentManager
 import com.intellij.ui.EditorNotifications
 
 class A11yFixAction : AnAction(
@@ -35,6 +33,8 @@ class A11yFixAction : AnAction(
                     project,
                     A11yBundle.message("notify.title"),
                     A11yBundle.message("notify.contentFixed"),
+                    Notify.A11Y_GROUP,
+                    null,
                     NotificationType.INFORMATION
                 )
                 notifications.updateNotifications(psiFile.virtualFile)

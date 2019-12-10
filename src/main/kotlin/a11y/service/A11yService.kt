@@ -77,7 +77,7 @@ class A11yService {
             fileOutputStream.close()
             inputStream.close()
 
-            a11yFixerFile.setExecutable(true);
+            a11yFixerFile.setExecutable(true)
 
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
@@ -99,7 +99,7 @@ class A11yService {
             fileDocumentManager.saveDocument(document)
 
             val filePath = psiFile.virtualFile.path
-            val command = listOf<String>(getCliPath(), "fix", filePath, filePath)
+            val command = listOf(getCliPath(), "fix", filePath, filePath)
             val processBuilder = ProcessBuilder(command)
 
             try {
@@ -125,16 +125,15 @@ class A11yService {
     @Throws(Throwable::class)
     fun executeReport(@NotNull psiFile: PsiFile): JsonArray {
         return ApplicationManager.getApplication().runReadAction(Computable<JsonArray> {
-            val command = listOf<String>(getCliPath(), "report", "--json", psiFile.virtualFile.path)
-            val processBuilder = ProcessBuilder(command)
+            val commandJson = listOf(getCliPath(), "report", "--json", psiFile.virtualFile.path)
+            val jsonProcessBuilder = ProcessBuilder(commandJson)
             var jsonArray = JsonArray()
 
             try {
-                val process = processBuilder.start()
-                process.waitFor()
-
-                val output = IOUtils.toString(process.inputStream, StandardCharsets.UTF_8)
-                val jsonTree = JsonParser().parse(output)
+                val jsonProcess = jsonProcessBuilder.start()
+                jsonProcess.waitFor()
+                val jsonOutput = IOUtils.toString(jsonProcess.inputStream, StandardCharsets.UTF_8)
+                val jsonTree = JsonParser().parse(jsonOutput)
 
                 if (jsonTree.isJsonArray) {
                     jsonArray = jsonTree.asJsonArray
@@ -147,6 +146,27 @@ class A11yService {
             }
 
             return@Computable jsonArray
+        })
+    }
+
+    @Throws(Throwable::class)
+    fun executeReportHumanReadable(@NotNull psiFile: PsiFile): String {
+        return ApplicationManager.getApplication().runReadAction(Computable<String> {
+            val commandHuman = listOf(getCliPath(), "report", psiFile.virtualFile.path)
+            val humanProcessBuilder = ProcessBuilder(commandHuman)
+
+            try {
+                val humanProcess = humanProcessBuilder.start()
+                humanProcess.waitFor()
+                return@Computable IOUtils.toString(humanProcess.inputStream, StandardCharsets.UTF_8)
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+
+            return@Computable ""
         })
     }
 

@@ -42,7 +42,6 @@ class A11yNotificationProvider : EditorNotifications.Provider<EditorNotification
         a11yService.unDismissFile(virtualFile)
 
         val panel = EditorNotificationPanel()
-        val notifications = EditorNotifications.getInstance(project)
 
         panel.setText(A11yBundle.message("panel.fixA11yIssues"))
         panel.createActionLabel(A11yBundle.message("panel.fixA11yIssues.create"), "com.applause.a11y.FixAction")
