@@ -1,0 +1,5 @@
+<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg">
+    <rect fill="none" id="canvas_background" height="80" width="80" y="0" x="0"/>
+    <ellipse stroke="#388ce0" ry="30" rx="30" id="svg_1" cy="40" cx="40" stroke-width="12"
+             fill="none"/>
+</svg>

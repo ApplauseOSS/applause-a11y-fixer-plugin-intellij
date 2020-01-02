@@ -1,9 +1,11 @@
 <idea-plugin>
     <id>com.applause.a11y.fixer.plugin.applause-a11y-fixer-plugin</id>
-    <name>Applause A11y Fixer</name>
+    <name>Applause A11Y Tools</name>
     <vendor email="support@applause.com.disabled" url="http://www.applause.com">Applause</vendor>
 
-    <description>Fix all the a11y things that are discovered by axe.</description>
+    <description>Generate reports and automatically fix accessibility (a11y) issues found in HTML files.</description>
+
+    <idea-version since-build="183" until-build="193.*"/>
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.xml</depends>
