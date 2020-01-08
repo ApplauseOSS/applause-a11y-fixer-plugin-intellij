@@ -5,7 +5,7 @@
     <description>Generate reports and automatically fix accessibility (a11y) issues found in HTML files.</description>
     <vendor>Applause</vendor>
 
-    <idea-version since-build="183" until-build="193.*"/>
+    <idea-version since-build="192.*" until-build="193.*"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
