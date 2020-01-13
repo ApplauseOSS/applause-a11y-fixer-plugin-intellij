@@ -12,15 +12,29 @@ $ git submodule update --remote
 
 **Build and Package the Node.js dependency**
 ```bash
-$ ./gradlew a11tFixerPackage
+$ ./gradlew a11yFixerPackage
 ```
 
-**Build the Intellij Plugin**
-```bash
-$ ./gradlew buildPlugin
-```
+**Run Intellij IDE in Development Mode**
 
-**Run Intellij Dev IDE**
+This will build the plugin and load it in the Dev IDE.
 ```bash
 $ ./gradlew runIde
+```
+
+## Deploy
+
+**Upload Plugin Package to AWS S3**
+
+You need a local file in the repository root `local.properties`.
+This should contain values as follows.
+```properties
+aws.bucket=<bucket-name>
+aws.accessKeyId=<aws-key-id>
+aws.secretKey=<aws-secret-key>
+```
+
+Run the Gradle command (will overwrite!):
+```bash
+$ ./gradlew uploadBuild
 ```

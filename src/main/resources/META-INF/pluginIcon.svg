@@ -1,5 +1,5 @@
-<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg">
-    <rect fill="none" id="canvas_background" height="80" width="80" y="0" x="0"/>
-    <ellipse stroke="#388ce0" ry="30" rx="30" id="svg_1" cy="40" cx="40" stroke-width="12"
+<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+    <rect fill="none" id="canvas_background" height="40" width="40" y="0" x="0"/>
+    <ellipse stroke="#388ce0" ry="15" rx="15" id="svg_1" cy="20" cx="20" stroke-width="6"
              fill="none"/>
 </svg>

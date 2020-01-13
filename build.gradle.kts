@@ -1,12 +1,14 @@
 plugins {
+    java
     id("org.jetbrains.intellij") version "0.4.14"
     id("com.github.node-gradle.node") version "2.2.0"
-    java
     kotlin("jvm") version "1.3.60"
+    id("com.mgd.core.gradle.s3") version "1.0.4"
+    id("com.github.b3er.local.properties") version "1.1"
 }
 
 group = "com.applause.a11y.fixer.plugin.intellij"
-version = "0.0.2"
+version = "0.0.3"
 
 repositories {
     mavenCentral()
@@ -32,6 +34,10 @@ node {
     download = true
 }
 
+s3 {
+    region = "us-east-1"
+}
+
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
@@ -41,11 +47,19 @@ tasks {
     }
 }
 
-tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes(
-        """Initial release."""
-    )
-}
+// TODO: need to decide how to format this stuff
+//tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
+//    changeNotes(
+//        """Initial release."""
+//    )
+//}
+
+
+//task("localProperties"){
+//    val properties = Properties()
+//    properties.load(project.file("local.properties").inputStream())
+//    System.setProperties(properties)
+//}
 
 task<com.moowork.gradle.node.npm.NpmTask>("a11yFixerInstall") {
     dependsOn("npmSetup")
@@ -65,3 +79,26 @@ task<Copy>("a11yFixerCopyPackage") {
 
 tasks.getByName("buildPlugin").dependsOn("a11yFixerCopyPackage")
 tasks.getByName("buildPlugin").mustRunAfter("a11yFixerCopyPackage")
+
+var uploadBuild = task<com.mgd.core.gradle.S3Upload>("uploadBuild") {
+    dependsOn("buildPlugin")
+    mustRunAfter("buildPlugin")
+
+    val propertiesSet = arrayOf(
+        project.hasProperty("aws.bucket"),
+        project.hasProperty("aws.accessKeyId"),
+        project.hasProperty("aws.secretKey")
+    ).all { it }
+
+    if (!propertiesSet) {
+        throw GradleException("AWS properties not set")
+    }
+
+    val buildFile = "${project.name}-${project.version}.zip"
+    val filePath = "${project.buildDir}/distributions/$buildFile"
+
+    bucket = project.property("aws.bucket").toString()
+    key = "intellij/builds/$buildFile"
+    file = filePath
+    overwrite = true
+}
