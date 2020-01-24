@@ -47,22 +47,14 @@ tasks {
     }
 }
 
-// TODO: need to decide how to format this stuff
-//tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-//    changeNotes(
-//        """Initial release."""
-//    )
-//}
 
-
-//task("localProperties"){
-//    val properties = Properties()
-//    properties.load(project.file("local.properties").inputStream())
-//    System.setProperties(properties)
-//}
+task<Exec>("pullA11yFixer") {
+    commandLine = listOf("git", "submodule", "update", "--remote", "--recursive")
+}
 
 task<com.moowork.gradle.node.npm.NpmTask>("a11yFixerInstall") {
-    dependsOn("npmSetup")
+    dependsOn("pullA11yFixer", "npmSetup")
+    mustRunAfter("pullA11yFixer")
     setArgs(listOf("run", "install-a11y-fixer"))
 }
 
@@ -93,6 +85,9 @@ var uploadBuild = task<com.mgd.core.gradle.S3Upload>("uploadBuild") {
     if (!propertiesSet) {
         throw GradleException("AWS properties not set")
     }
+
+    System.setProperty("aws.accessKeyId", project.property("aws.accessKeyId").toString())
+    System.setProperty("aws.secretKey", project.property("aws.secretKey").toString())
 
     val buildFile = "${project.name}-${project.version}.zip"
     val filePath = "${project.buildDir}/distributions/$buildFile"
