@@ -35,16 +35,16 @@ class A11yReportAction : AnAction(
 
 
         try {
-            val jsonArray = a11yService.executeReport(psiFile)
+            val violationCount = a11yService.getViolationCount(psiFile)
             val humanReadableReport = a11yService.executeReportHumanReadable(psiFile)
 
             var description = A11yBundle.message("notify.contentFoundIssues", 0)
-            if (jsonArray.size() >= 1) {
-                description = A11yBundle.message("notify.contentFoundIssues", jsonArray.size())
+            if (violationCount >= 1) {
+                description = A11yBundle.message("notify.contentFoundIssues", violationCount)
             }
 
             var actions = listOf<AnAction>()
-            if (jsonArray.size() >= 1) {
+            if (violationCount >= 1) {
                 val action = object : AnAction(A11yBundle.message("action.detailsLink"), null, null) {
                     override fun actionPerformed(e: AnActionEvent) {
                         val dialog = object : DialogWrapper(project, true) {

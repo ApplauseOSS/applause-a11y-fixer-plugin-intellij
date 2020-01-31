@@ -1,5 +1,10 @@
-<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
-    <rect fill="none" id="canvas_background" height="40" width="40" y="0" x="0"/>
-    <ellipse stroke="#388ce0" ry="15" rx="15" id="svg_1" cy="20" cx="20" stroke-width="6"
-             fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="40" height="40">
+    <title>applause-icon</title>
+    <ellipse id="svg_1"
+             stroke="#137ec0"
+             fill="none"
+             ry="15" rx="15"
+             cy="20" cx="20"
+             stroke-width="7.7"/>
 </svg>

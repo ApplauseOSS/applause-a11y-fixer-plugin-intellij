@@ -1,6 +1,5 @@
 package a11y.service
 
-import com.google.gson.JsonArray
 import com.google.gson.JsonParser
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileEditor.FileDocumentManager
@@ -23,7 +22,7 @@ import java.nio.charset.StandardCharsets
 class A11yService {
     private val pluginId = "a11y-fixer-plugin"
     private val a11yFixerTempDir = FileUtilRt.createTempDirectory(pluginId, "", false)
-    private val a11yFixerFile = File(a11yFixerTempDir, "a11y-fixer")
+    private val a11yFixerFile = File(a11yFixerTempDir, "applause-accessibility-tool")
     private val dismissedFileMap = ContainerUtil.createWeakKeyWeakValueMap<VirtualFile, Boolean>()
 
     private fun getCliPath(): String {
@@ -50,18 +49,21 @@ class A11yService {
         var resourcePath = ""
 
         if (SystemUtils.IS_OS_MAC_OSX) {
-            resourcePath = "/bin/mac/a11y-fixer"
+            resourcePath = "/bin/mac/applause-accessibility-tool"
         }
         if (SystemUtils.IS_OS_LINUX) {
-            resourcePath = "/bin/linux/a11y-fixer"
+            resourcePath = "/bin/linux/applause-accessibility-tool"
         }
         if (SystemUtils.IS_OS_WINDOWS) {
-            resourcePath = "/bin/win/a11y-fixer.exe"
+            resourcePath = "/bin/win/applause-accessibility-tool.exe"
         }
 
         return resourcePath
     }
 
+    /*
+    Initialize the fixer cli tool by copying it out of the jar's resources and into a temporary location on the system
+     */
     fun initA11yFixerUtil() {
         try {
             val inputStream = javaClass.getResourceAsStream(this.getPathToExecutable())
@@ -123,21 +125,21 @@ class A11yService {
     }
 
     @Throws(Throwable::class)
-    fun executeReport(@NotNull psiFile: PsiFile): JsonArray {
-        return ApplicationManager.getApplication().runReadAction(Computable<JsonArray> {
+    fun getViolationCount(@NotNull psiFile: PsiFile): Int {
+        return ApplicationManager.getApplication().runReadAction(Computable<Int> {
             val commandJson = listOf(getCliPath(), "report", "--json", psiFile.virtualFile.path)
             val jsonProcessBuilder = ProcessBuilder(commandJson)
-            var jsonArray = JsonArray()
+            jsonProcessBuilder.redirectErrorStream(true)
+
+            var jsonCounter = 0
 
             try {
                 val jsonProcess = jsonProcessBuilder.start()
-                jsonProcess.waitFor()
                 val jsonOutput = IOUtils.toString(jsonProcess.inputStream, StandardCharsets.UTF_8)
+                jsonProcess.waitFor()
                 val jsonTree = JsonParser().parse(jsonOutput)
 
-                if (jsonTree.isJsonArray) {
-                    jsonArray = jsonTree.asJsonArray
-                }
+                jsonCounter = jsonTree.asJsonArray.size()
 
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -145,7 +147,7 @@ class A11yService {
                 e.printStackTrace()
             }
 
-            return@Computable jsonArray
+            return@Computable jsonCounter
         })
     }
 
@@ -155,10 +157,12 @@ class A11yService {
             val commandHuman = listOf(getCliPath(), "report", psiFile.virtualFile.path)
             val humanProcessBuilder = ProcessBuilder(commandHuman)
 
+            var report = ""
+
             try {
                 val humanProcess = humanProcessBuilder.start()
+                report = IOUtils.toString(humanProcess.inputStream, StandardCharsets.UTF_8)
                 humanProcess.waitFor()
-                return@Computable IOUtils.toString(humanProcess.inputStream, StandardCharsets.UTF_8)
 
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -166,7 +170,7 @@ class A11yService {
                 e.printStackTrace()
             }
 
-            return@Computable ""
+            return@Computable report
         })
     }
 

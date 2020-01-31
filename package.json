@@ -1,13 +1,6 @@
 {
   "author": "Applause Labs",
-  "dependencies": {
-    "pkg": "^4.4.0"
-  },
   "description": "A11y (Accessibility) fixer plugin for Intellij",
-  "engines": {
-    "node": "12.13.0",
-    "npm": "6.7.0"
-  },
   "license": "MIT",
   "name": "applause-a11y-fixer-plugin-intellij",
   "repository": "https://github.com/ApplauseAQI/applause-a11y-fixer-plugin-intellij",
@@ -15,9 +8,9 @@
     "a11y-fixer": "cd applause-a11y-fixer && npm run start",
     "install-a11y-fixer": "cd applause-a11y-fixer && npm install",
     "pkg": "npm run pkg-macos && npm run pkg-linux && npm run pkg-win",
-    "pkg-linux": "npx pkg -t node12-linux --out-path ./applause-a11y-fixer/pkg/linux ./applause-a11y-fixer/",
-    "pkg-macos": "npx pkg -t node12-macos --out-path ./applause-a11y-fixer/pkg/mac ./applause-a11y-fixer/",
-    "pkg-win": "npx pkg -t node12-win --out-path ./applause-a11y-fixer/pkg/win ./applause-a11y-fixer/"
+    "pkg-linux": "cd applause-a11y-fixer && npx pkg -t node12-linux --out-path ./pkg/linux .",
+    "pkg-macos": "cd applause-a11y-fixer && npx pkg -t node12-macos --out-path ./pkg/mac .",
+    "pkg-win": "cd applause-a11y-fixer && npx pkg -t node12-win --out-path ./pkg/win ."
   },
   "version": "0.0.1"
 }

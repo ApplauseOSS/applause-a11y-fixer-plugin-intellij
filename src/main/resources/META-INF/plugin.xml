@@ -28,15 +28,13 @@
             <li>Integrates seamlessly into the web development process</li>
             <li>Fast and easy to use with no advanced accessibility knowledge required</li>
             <li>Flags accessibility issues early in the development process</li>
-            <li>For non-subjective issues, provides a code updates to resolve the defect that can be automatically applied</li>
-            <li>For subjective issues, provides a clear recommendation to resolve the defect that requires the user’s input to
-                resolve
-            </li>
+            <li>For non-subjective issues, provides a code update that can be automatically applied</li>
+            <li>For subjective issues, provides a clear recommendation that requires the user’s input to resolve</li>
             <li>Helps make web content more accessible to all users</li>
         </ul>
         <br>
 
-        <p>Use of this plugin is subject to the Applause Terms and Conditions.</p>
+        <p>Use of this plugin is subject to Applause Accessibility Tool Terms and Conditions.</p>
         ]]>
     </description>
     <vendor>Applause</vendor>

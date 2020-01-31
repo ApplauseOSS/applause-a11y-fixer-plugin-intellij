@@ -36,8 +36,8 @@ class A11yNotificationProvider : EditorNotifications.Provider<EditorNotification
 
         if (!a11yService.isInitialized()) return null
 
-        val jsonArray = a11yService.executeReport(psiFile)
-        if (jsonArray.size() < 1) return null
+        val violationCount = a11yService.getViolationCount(psiFile)
+        if (violationCount < 1) return null
 
         a11yService.unDismissFile(virtualFile)
 
