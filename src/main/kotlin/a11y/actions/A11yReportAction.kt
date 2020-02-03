@@ -39,12 +39,13 @@ class A11yReportAction : AnAction(
             val humanReadableReport = a11yService.executeReportHumanReadable(psiFile)
 
             var description = A11yBundle.message("notify.contentFoundIssues", 0)
-            if (violationCount >= 1) {
-                description = A11yBundle.message("notify.contentFoundIssues", violationCount)
-            }
-
             var actions = listOf<AnAction>()
+
             if (violationCount >= 1) {
+                a11yService.unDismissFile(psiFile.virtualFile)
+
+                description = A11yBundle.message("notify.contentFoundIssues", violationCount)
+
                 val action = object : AnAction(A11yBundle.message("action.detailsLink"), null, null) {
                     override fun actionPerformed(e: AnActionEvent) {
                         val dialog = object : DialogWrapper(project, true) {

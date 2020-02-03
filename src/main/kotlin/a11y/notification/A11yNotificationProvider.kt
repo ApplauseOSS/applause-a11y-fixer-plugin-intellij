@@ -43,11 +43,13 @@ class A11yNotificationProvider : EditorNotifications.Provider<EditorNotification
 
         val panel = EditorNotificationPanel()
 
-        panel.setText(A11yBundle.message("panel.fixA11yIssues"))
+        panel.setText(A11yBundle.message("panel.fixA11yIssues", violationCount))
         panel.createActionLabel(A11yBundle.message("panel.fixA11yIssues.create"), "com.applause.a11y.FixAction")
         panel.createActionLabel(A11yBundle.message("panel.cancel"))
         {
             a11yService.dismissFile(virtualFile)
+            val notifications = EditorNotifications.getInstance(project)
+            notifications.updateNotifications(virtualFile)
         }
 
         return panel

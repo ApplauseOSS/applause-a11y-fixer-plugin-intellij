@@ -131,7 +131,7 @@ class A11yService {
             val jsonProcessBuilder = ProcessBuilder(commandJson)
             jsonProcessBuilder.redirectErrorStream(true)
 
-            var jsonCounter = 0
+            var violationCount = 0
 
             try {
                 val jsonProcess = jsonProcessBuilder.start()
@@ -139,7 +139,7 @@ class A11yService {
                 jsonProcess.waitFor()
                 val jsonTree = JsonParser().parse(jsonOutput)
 
-                jsonCounter = jsonTree.asJsonArray.size()
+                violationCount = jsonTree.asJsonArray.size()
 
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -147,7 +147,8 @@ class A11yService {
                 e.printStackTrace()
             }
 
-            return@Computable jsonCounter
+            println("Violation Count: $violationCount")
+            return@Computable violationCount
         })
     }
 
