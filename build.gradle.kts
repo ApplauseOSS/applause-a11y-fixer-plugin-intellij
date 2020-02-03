@@ -48,13 +48,13 @@ tasks {
 }
 
 
-task<Exec>("pullA11yFixer") {
+task<Exec>("a11yFixerPullSubmodule") {
     commandLine = listOf("git", "submodule", "update", "--remote", "--recursive")
 }
 
 task<com.moowork.gradle.node.npm.NpmTask>("a11yFixerInstall") {
-    dependsOn("pullA11yFixer", "npmSetup")
-    mustRunAfter("pullA11yFixer")
+    dependsOn("a11yFixerPullSubmodule", "npmSetup")
+    mustRunAfter("a11yFixerPullSubmodule")
     setArgs(listOf("run", "install-a11y-fixer"))
 }
 
@@ -72,7 +72,7 @@ task<Copy>("a11yFixerCopyPackage") {
 tasks.getByName("buildPlugin").dependsOn("a11yFixerCopyPackage")
 tasks.getByName("buildPlugin").mustRunAfter("a11yFixerCopyPackage")
 
-var uploadBuild = task<com.mgd.core.gradle.S3Upload>("uploadBuild") {
+task<com.mgd.core.gradle.S3Upload>("a11yFixerS3uploadBuild") {
     dependsOn("buildPlugin")
     mustRunAfter("buildPlugin")
 
