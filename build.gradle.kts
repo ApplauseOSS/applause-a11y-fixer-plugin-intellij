@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.applause.a11y.fixer.plugin.intellij"
-version = "0.0.6"
+version = "0.0.8"
 
 repositories {
     mavenCentral()
@@ -21,7 +21,8 @@ dependencies {
 }
 
 intellij {
-    version = "2019.3"
+    version = "2019.1"
+    updateSinceUntilBuild = false
 }
 
 configure<JavaPluginConvention> {

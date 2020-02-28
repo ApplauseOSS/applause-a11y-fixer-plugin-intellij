@@ -34,12 +34,12 @@
         </ul>
         <br>
 
-        <p>Use of this plugin is subject to Applause Accessibility Tool Terms and Conditions.</p>
+        <p>Use of this plugin is subject to <a href="https://www.applause.com/accessibility-tool-terms-conditions">Applause Accessibility Tool Terms and Conditions</a>.</p>
         ]]>
     </description>
     <vendor>Applause</vendor>
 
-    <idea-version since-build="192.*" until-build="193.*"/>
+    <idea-version since-build="191.*" until-build="193.*"/>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
