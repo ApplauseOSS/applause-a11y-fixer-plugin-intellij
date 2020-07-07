@@ -1,5 +1,9 @@
 # applause-a11y-fixer-plugin-intellij
 
+(*if you are looking for the curated version of the plug-in please visit:
+https://www.applause.com/accessibility-tool#solutionsContact and fill out the
+form*)
+
 ## Dependencies
 
 **Update dependency submodules**
