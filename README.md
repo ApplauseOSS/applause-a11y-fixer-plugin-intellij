@@ -1,8 +1,7 @@
 # applause-a11y-fixer-plugin-intellij
 
-(*if you are looking for the curated version of the plug-in please visit:
-https://www.applause.com/accessibility-tool#solutionsContact and fill out the
-form*)
+(*if you are looking for the curated version of the plug-in please click
+[here](https://www.applause.com/accessibility-tool?utm_medium=referral&utm_source=github&utm_campaign=R-NA_a11y_tool#solutionsContact)*)
 
 ## Dependencies
 
