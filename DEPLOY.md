@@ -14,5 +14,5 @@ aws.secretKey=<aws-secret-key>
 
 Run the Gradle command (will overwrite!):
 ```bash
-$ ./gradlew uploadBuild
+$ ./gradlew a11yFixerS3uploadBuild
 ```
